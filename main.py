@@ -1,9 +1,9 @@
 import code as c
 
-c.print_greeting()
-
 
 def main():
+    """Function that loops user through the program cycle: asking for scale name and root note, returning the scale."""
+    c.print_greeting()
 
     while True:
         root_note = c.input_valid_root_note()
