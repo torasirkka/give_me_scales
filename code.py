@@ -104,7 +104,6 @@ MODE_PATTERNS = {
 
 def print_greeting():
     """Prints greeting and purpose of this program."""
-
     print(
         "\nHi there! \nI can help you figure out the notes of a scale or mode of your choice!\n"
     )
@@ -112,7 +111,6 @@ def print_greeting():
 
 def input_valid_root_note() -> str:
     """Asks user for a root note until a valid one is given."""
-
     while True:
         root_note = (
             input("What root note do you want to work with? ").strip().capitalize()
@@ -135,7 +133,6 @@ def input_valid_root_note() -> str:
 
 def input_valid_scale() -> int:
     """Asks user for a scale until a valid one is given."""
-
     while True:
         print("\tHere are the scales I currently am aware of:")
         for key, value in SCALES_AND_MODES.items():
@@ -166,7 +163,6 @@ def mode_pattern(mode_number: int) -> List[int]:
 
 def scale(root_note: str, mode_number: int) -> List[str]:
     """Builds a notes list (scale) based on the root note and mode number."""
-
     if sharp_mode(root_note) == True:
         notes = SHARP_NOTES
     else:
