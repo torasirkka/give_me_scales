@@ -117,7 +117,7 @@ def input_valid_root_note() -> str:
         )
         if root_note in EQUIVALENT_NOTES:
             print(
-                f"\n\tAlright, {root_note}! I'll call this note {EQUIVALENT_NOTES[root_note]}, which is just another way to refenence that note.\n"
+                f"\n\tAlright, {root_note}! I'll call this note {EQUIVALENT_NOTES[root_note]}, which is just another way to reference that note.\n"
             )
             return EQUIVALENT_NOTES[root_note]
 
