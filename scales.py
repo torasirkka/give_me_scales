@@ -117,7 +117,7 @@ def input_valid_root_note() -> str:
         )
         if root_note in EQUIVALENT_NOTES:
             print(
-                f"""\n\tAlright, {root_note}! I'll call this note {EQUIVALENT_NOTES[root_note]}, which is just another way to reference that note.\n"""
+                f"\n\tAlright, {root_note}! I'll call this note {EQUIVALENT_NOTES[root_note]}, which is just another way to refenence that note.\n"
             )
             return EQUIVALENT_NOTES[root_note]
 
@@ -180,10 +180,8 @@ def scale(root_note: str, mode_number: int) -> List[str]:
 
 def sharp_mode(root_note: str) -> bool:
     """Checks if the root note is sharp."""
-    if root_note in SHARP_ROOT_NOTES:
-        return True
-    else:
-        return False
+    is_sharp = root_note in SHARP_ROOT_NOTES
+    return is_sharp
 
 
 def print_scale(root_note: str, mode_number: int, scale: List[str]):
