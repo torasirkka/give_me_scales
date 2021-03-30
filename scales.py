@@ -180,8 +180,7 @@ def scale(root_note: str, mode_number: int) -> List[str]:
 
 def sharp_mode(root_note: str) -> bool:
     """Checks if the root note is sharp."""
-    is_sharp = root_note in SHARP_ROOT_NOTES
-    return is_sharp
+    return root_note in SHARP_ROOT_NOTES
 
 
 def print_scale(root_note: str, mode_number: int, scale: List[str]):
