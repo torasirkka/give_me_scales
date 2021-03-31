@@ -4,17 +4,17 @@ import scales
 from typing import Dict, List
 
 ALL_NOTES = scales.ALL_NOTES
-EVENT_DURATION = 0.25  # seconds: the time each note is played.
+EVENT_DURATION = 0.25  # [seconds]: the time each note is played.
 SAMPLE_RATE = 44100
+LOWEST_A = 220  # [Hz]: frequency of A3, which is chosen to be the reference frequency, meaning it is the lowest note to be played.
 
-# calculate frequencies and store them in two dicts,
-# spanning two intervals. This is needed to get the right
-# octave of a note.
+# Calculate frequencies and store them in two dicts for two intervals. This is
+# needed to play scales that smoothly increases or decreases.
 
 FREQUENCY_DICT = {}
 FREQUENCY_DICT_NEXT_OCTAVE = {}
 for note in ALL_NOTES:
-    frequency = 220 * 2 ** (ALL_NOTES[note] / 12)
+    frequency = LOWEST_A * 2 ** (ALL_NOTES[note] / 12)
     FREQUENCY_DICT[note] = frequency
     FREQUENCY_DICT_NEXT_OCTAVE[note] = 2 * frequency
 
