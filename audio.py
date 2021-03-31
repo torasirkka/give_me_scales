@@ -2,7 +2,6 @@ import numpy as np
 import simpleaudio as sa
 import scales
 from typing import Dict, List
-import keyword
 
 ALL_NOTES = scales.ALL_NOTES
 EVENT_DURATION = 0.25  # [seconds]: the time each note is played.
