@@ -2,6 +2,7 @@ import numpy as np
 import simpleaudio as sa
 import scales
 from typing import Dict, List
+import keyword
 
 ALL_NOTES = scales.ALL_NOTES
 EVENT_DURATION = 0.25  # [seconds]: the time each note is played.
@@ -62,7 +63,7 @@ def note_arrays(frequencies: List[float]) -> List[np.ndarray]:
     return notes
 
 
-def play_notes(note_array):
+def play_notes(note_array: np.ndarray):
     """plays a note"""
     # concatenate notes
     audio = np.hstack((note_array))
@@ -74,3 +75,33 @@ def play_notes(note_array):
     play_obj = sa.play_buffer(audio, 1, 2, SAMPLE_RATE)
     # wait for playback to finish before exiting
     play_obj.wait_done()
+
+
+# flow that funnels scale through the work:
+def play_scale(scale: List[str], mode_number: int):
+    freqs = frequencies(scale, slice_index(scale))
+    notes = note_arrays(freqs)
+    play_notes(notes)
+
+
+def input_play_again(scale: List[str], mode_number: int):
+    """Asks if the user wants to replay the scale."""
+    valid_answers = [0, 1]
+    while True:
+        try:
+            reply = int(
+                input(
+                    "Would you like to replay the scale?\n\tAnswer 1 to replay scale.\n\tAnswer 0 to restart program:\n\t"
+                )
+            )
+        except ValueError:
+            print(f"That's not a valid answer.")
+            continue
+
+        if reply == 1:
+            play_scale(scale, mode_number)
+        elif reply == 0:
+            print("We're starting over!")
+            break
+        else:
+            print("That is not a valid answer.")

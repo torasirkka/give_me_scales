@@ -12,9 +12,8 @@ def main():
         scale = scales.scale(root_note, mode_number)
         scales.print_scale(root_note, mode_number, scale)
 
-        freqs = audio.frequencies(scale, audio.slice_index(scale))
-        notes = audio.note_arrays(freqs)
-        audio.play_notes(notes)
+        audio.play_scale(scale, mode_number)
+        audio.input_play_again(scale, mode_number)
 
 
 if __name__ == "__main__":
