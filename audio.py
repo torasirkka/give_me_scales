@@ -21,9 +21,9 @@ for note in ALL_NOTES:
 
 
 def slice_index(scale: List[str]) -> int:
-    slice_index = 0
+    slice_index = 7  # Ensures that the 8th note is an octave higher than the root note.
     previous_note_index = 0
-    for note in scale:
+    for note in scale[:-1]:  # Checks for slice_index prior to the 8th note.
         note_index = ALL_NOTES[note]
         if note_index < previous_note_index:
             slice_index = scale.index(note)
