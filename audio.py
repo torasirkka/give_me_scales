@@ -74,10 +74,3 @@ def play_notes(note_array):
     play_obj = sa.play_buffer(audio, 1, 2, SAMPLE_RATE)
     # wait for playback to finish before exiting
     play_obj.wait_done()
-
-
-# flow that funnels scale through the work:
-test_scale = scales.scale(root_note="Bb", mode_number=1)
-freqs = frequencies(test_scale, slice_index(test_scale))
-notes = note_arrays(freqs)
-play_notes(notes)
