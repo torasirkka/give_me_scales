@@ -17,19 +17,16 @@ LOWEST_OCTAVE = 3  # Here I set what the lowest octave to be played is.
 
 
 def frequency_dict(octave: int) -> Dict[str, float]:
-    """Generates a dictionary of frequencies for the notes in a given octave."""
+    """Generates a dictionary of frequencies for all notes in a given octave."""
     freq_dict = {}
     for note in ALL_NOTES:
         notes_from_ref_a = ALL_NOTES[note] + (octave - REFERENCE_OCT) * 12
-        freq_dict[note] = REFERENCE_A * 2 ** (
-            (notes_from_ref_a) / 12
-        )  # Per definition, this equation returns the frequency of a note in a given interval.
+        freq_dict[note] = REFERENCE_A * 2 ** ((notes_from_ref_a) / 12)
     return freq_dict
 
 
 def frequencies(scale: List[str]) -> List[float]:
     """Translates a scale to a list of frequencies.
-
     In order to make sure the right frequency of the note is played, I keep track of
     the last, the current frequency, and the current octave. A scale is a sequence of
     notes that increase in frequency. Hence, if the calculated note has lower frequency,
@@ -73,7 +70,6 @@ def play_notes(wave_array: List[np.ndarray]):
     """A list of sinus wave arrays are played one after another.
     To accomplish this, the arrays are concatenated, converted to 16-bit data before being played
     by the sa module. The program waits for playback to finish before exiting."""
-
     audio = np.hstack((wave_array))
     audio *= 32767 / np.max(np.abs(audio))
     audio = audio.astype(np.int16)
