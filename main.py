@@ -1,4 +1,5 @@
 import scales
+import audio
 
 
 def main():
@@ -10,6 +11,9 @@ def main():
         mode_number = scales.input_valid_scale()
         scale = scales.scale(root_note, mode_number)
         scales.print_scale(root_note, mode_number, scale)
+
+        audio.play_scale(scale, mode_number)
+        audio.play_again_execution(scale, mode_number)
 
 
 if __name__ == "__main__":
