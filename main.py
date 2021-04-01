@@ -13,7 +13,7 @@ def main():
         scales.print_scale(root_note, mode_number, scale)
 
         audio.play_scale(scale, mode_number)
-        audio.input_play_again(scale, mode_number)
+        audio.play_again_execution(scale, mode_number)
 
 
 if __name__ == "__main__":
