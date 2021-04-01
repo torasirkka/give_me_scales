@@ -2,8 +2,6 @@ from typing import Dict, List
 
 import numpy as np
 import simpleaudio as sa
-import sys
-import keyboard
 
 import scales
 
@@ -92,7 +90,6 @@ def play_scale(scale: List[str], mode_number: int):
 def input_play_again() -> bool:
     """Asks if the user wants to replay the scale.
     Loops until a valid answer is received. Once that is accomplished, a boolean is returned."""
-    valid_answers = [0, 1]
     while True:
         try:
             reply = int(
