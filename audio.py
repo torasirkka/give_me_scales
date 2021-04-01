@@ -5,46 +5,45 @@ import simpleaudio as sa
 
 import scales
 
-ALL_NOTES = scales.ALL_NOTES
+ALL_NOTES = scales.ALL_NOTES  # Dict that translates name of note to order in interval.
 EVENT_DURATION = 0.25  # [seconds]: the time each note is played.
 SAMPLE_RATE = 44100
-LOWEST_A = 220  # [Hz]: frequency of A3, which is chosen to be the reference frequency, meaning it is the lowest note to be played.
-
-# Calculate frequencies and store them in two dicts for two intervals. This is
-# needed to play scales that smoothly increases or decreases.
-
-FREQUENCY_DICT = {}
-FREQUENCY_DICT_NEXT_OCTAVE = {}
-for note in ALL_NOTES:
-    frequency = LOWEST_A * 2 ** (ALL_NOTES[note] / 12)
-    FREQUENCY_DICT[note] = frequency
-    FREQUENCY_DICT_NEXT_OCTAVE[note] = 2 * frequency
+REFERENCE_A = (
+    440  # [Hz]: frequency of A4, which is a commonly used reference frequency.
+)
+REFERENCE_OCT = 4
+LOWEST_OCTAVE = 3  # Here I set what the lowest octave to be played is.
 
 
-def slice_index(scale: List[str]) -> int:
-    slice_index = 7  # Ensures that the 8th note is an octave higher than the root note.
-    previous_note_index = 0
-    for note in scale[:-1]:  # Checks for slice_index prior to the 8th note.
-        note_index = ALL_NOTES[note]
-        if note_index < previous_note_index:
-            slice_index = scale.index(note)
-        previous_note_index = note_index
-    return slice_index
+def frequency_dict(octave: int) -> Dict[str, float]:
+    """Generates a dictionary of frequencies for the notes in a given octave."""
+    freq_dict = {}
+    for note in ALL_NOTES:
+        notes_from_ref_a = ALL_NOTES[note] + (octave - REFERENCE_OCT) * 12
+        freq_dict[note] = REFERENCE_A * 2 ** (
+            (notes_from_ref_a) / 12
+        )  # Per definition, this equation returns the frequency of a note in a given interval.
+    return freq_dict
 
 
-def frequencies(scale: List[str], slice_index) -> List[float]:
+def frequencies(scale: List[str]) -> List[float]:
     """Translates a scale to a list of frequencies."""
-    notes_1st_octaves = scale[:slice_index]
-    notes_2st_octaves = scale[slice_index:]
 
-    frequencies = []
-    for note in notes_1st_octaves:
-        frequencies.append(FREQUENCY_DICT[note])
-    for note in notes_2st_octaves:
-        frequencies.append(FREQUENCY_DICT_NEXT_OCTAVE[note])
+    frequencies = [0.0]
+    octave_index = LOWEST_OCTAVE
+    freq_index = 0
+    for note in scale:
+        freq = frequency_dict(octave_index)[note]
+        if freq <= frequencies[freq_index]:
+            octave_index += 1
+            freq = frequency_dict(octave_index)[note]
+        frequencies.append(freq)
+        freq_index += 1
 
+    frequencies = frequencies[1:]
     backwards = frequencies[::-1]
     frequencies = frequencies + backwards[1:]
+
     return frequencies
 
 
@@ -80,7 +79,7 @@ def play_notes(note_array: np.ndarray):
 
 # flow that funnels scale through the work:
 def play_scale(scale: List[str], mode_number: int):
-    freqs = frequencies(scale, slice_index(scale))
+    freqs = frequencies(scale)
     notes = note_arrays(freqs)
     play_notes(notes)
 
