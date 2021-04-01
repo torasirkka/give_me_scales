@@ -1,7 +1,7 @@
 from typing import Dict, List
+import re
 
 import numpy as np
-import re
 import simpleaudio as sa
 
 import scales
