@@ -114,7 +114,7 @@ def input_play_again() -> bool:
 
 
 def play_again_execution(scale: List[str], mode_number: int):
-    """Plays the scale again if again is True"""
+    """Plays the scale again if the user input returned from input_play_again() equals True."""
     while True:
         if input_play_again():
             play_scale(scale, mode_number)
