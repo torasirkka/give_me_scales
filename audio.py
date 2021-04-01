@@ -1,6 +1,7 @@
 from typing import Dict, List
 
 import numpy as np
+import re
 import simpleaudio as sa
 
 import scales
@@ -88,32 +89,20 @@ def play_scale(scale: List[str], mode_number: int):
 
 
 def input_play_again() -> bool:
-    """Asks if the user wants to replay the scale.
-    Loops until a valid answer is received. Once that is accomplished, a boolean is returned."""
-    while True:
-        try:
-            reply = int(
-                input(
-                    "Would you like to replay the scale?\n\tAnswer 1 to replay scale.\n\tAnswer 0 to restart program:\n\t"
-                )
-            )
-        except ValueError:
-            print(f"That's not a valid answer.")
-            continue
-
-        if reply == 1:
-            return True
-        elif reply == 0:
-            print("Alright, let's do this again!")
-            return False
-        else:
-            print("That is not a valid answer.")
+    """Asks if the user wants to replay the scale."""
+    positive_pattern = "^[yY*]"
+    reply = input(
+        "Would you like to replay the scale? Type 'y' or 'yes' to replay scale. "
+    )
+    return re.match(positive_pattern, reply)
 
 
 def play_again_execution(scale: List[str], mode_number: int):
-    """Plays the scale again if the user input returned from input_play_again() equals True."""
+    """Plays the scale over and over, as many times as the user wants.
+    Loops and re-plays the scale until the user input returned from input_play_again() equals False."""
     while True:
         if input_play_again():
             play_scale(scale, mode_number)
         else:
+            print("\nAlright, let's do this again!")
             break
