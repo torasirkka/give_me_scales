@@ -1,5 +1,7 @@
 import scales
 import audio
+import dataclasses
+import enum
 
 
 def main():
@@ -14,6 +16,15 @@ def main():
 
         audio.play_scale(scale, mode_number)
         audio.play_again_execution(scale, mode_number)
+
+
+@dataclasses.dataclass
+class states(enum.Enum):
+    get_root_note = 1
+    get_scale = 2
+    print_scales = 3
+    play_notes = 4
+    play_again = 5
 
 
 if __name__ == "__main__":
