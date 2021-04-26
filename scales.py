@@ -105,7 +105,7 @@ MODE_PATTERNS = {
 def print_greeting():
     """Prints greeting and purpose of this program."""
     print(
-        "\nHi there! \nI can help you figure out the notes of a scale or mode of your choice!\n"
+        "\nHi there! \nI can help you figure out the notes of a scale or mode of your choice!"
     )
 
 
@@ -113,7 +113,7 @@ def input_valid_root_note() -> str:
     """Asks user for a root note until a valid one is given."""
     while True:
         root_note = (
-            input("What root note do you want to work with? ").strip().capitalize()
+            input("\nWhat root note do you want to work with? ").strip().capitalize()
         )
         if root_note in EQUIVALENT_NOTES:
             print(
@@ -131,29 +131,32 @@ def input_valid_root_note() -> str:
             )
 
 
-def input_valid_scale() -> int:
-    """Asks user for a scale until a valid one is given."""
-    while True:
-        print("\tHere are the scales I currently am aware of:")
-        for key, value in SCALES_AND_MODES.items():
-            print(f"\t{value} ({key})")
-        print("")
+def print_scale_to_number_mapping():
+    print("\tHere are the scales I currently am aware of:")
+    for key, value in SCALES_AND_MODES.items():
+        print(f"\t{value} ({key})")
+    print("")
 
-        try:
-            scale_number = int(
-                input("What's the number of the scale or mode you seek? ")
-            )
 
-        except ValueError:
-            print("\nUm, that's not a number. How about we try that again?\n")
-            continue
+def input_scale() -> str:
+    """Asks user for a scale."""
+    return input("What's the number of the scale or mode you seek? ")
 
-        if scale_number in SCALES_AND_MODES:
-            return scale_number
-        else:
-            print(
-                "\nUups! That number does not map to any of my scales or modes. Let's try again.\n"
-            )
+
+def valid_number(response: str, valid_answers: list) -> bool:
+    try:
+        scale_number = int(response)
+    except ValueError:
+        print("\nUm, that's not a number. How about we try that again?\n")
+        return False
+
+    if scale_number in valid_answers:
+        return True
+    else:
+        print(
+            "\nUups! That number does not map to any of my scales or modes. Let's try again.\n"
+        )
+        return False
 
 
 def mode_pattern(mode_number: int) -> List[int]:
@@ -186,5 +189,6 @@ def sharp_mode(root_note: str) -> bool:
 def print_scale(root_note: str, mode_number: int, scale: List[str]):
     """Prints the name, root note and notes in the scale."""
     mode_name = SCALES_AND_MODES[mode_number]
-    print(f"\n\tThe {root_note} {mode_name} scale contains the following notes:")
+    print(
+        f"\n\tThe {root_note} {mode_name} scale contains the following notes:")
     print(f"\t{', '.join(x for x in scale)}\n")

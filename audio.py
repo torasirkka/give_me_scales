@@ -6,7 +6,8 @@ import simpleaudio as sa
 
 import scales
 
-ALL_NOTES = scales.ALL_NOTES  # Dict that translates name of note to order in interval.
+# Dict that translates name of note to order in interval.
+ALL_NOTES = scales.ALL_NOTES
 EVENT_DURATION = 0.25  # [seconds]: the time each note is played.
 SAMPLE_RATE = 44100
 REFERENCE_A = (
@@ -58,7 +59,8 @@ def timesteps(event_duration: float, sample_rate: float) -> np.ndarray:
 
 def wave_arrays(frequencies: List[float]) -> List[np.ndarray]:
     """Translates frequencies (floats) to discretized sine waves (arrays) corresponding to the notes."""
-    discretized_time = timesteps(event_duration=EVENT_DURATION, sample_rate=SAMPLE_RATE)
+    discretized_time = timesteps(
+        event_duration=EVENT_DURATION, sample_rate=SAMPLE_RATE)
     waves: List[np.ndarray] = []
     for f in frequencies:
         waves += [np.sin(f * 2 * np.pi * discretized_time)]
@@ -84,21 +86,8 @@ def play_scale(scale: List[str], mode_number: int):
     play_notes(notes)
 
 
-def input_play_again() -> bool:
-    """Asks if the user wants to replay the scale."""
-    positive_pattern = "^[yY*]"
-    reply = input(
-        "Would you like to replay the scale? Type 'y' or 'yes' to replay scale. "
+def input_play_another_scale() -> str:
+    """Asks if the user wants to hear another scale (for the same root note)."""
+    return input(
+        "Type a number between 1 and 7 to hear another scale or type 0 to start over with another root note. "
     )
-    return re.match(positive_pattern, reply)
-
-
-def play_again_execution(scale: List[str], mode_number: int):
-    """Plays the scale over and over, as many times as the user wants.
-    Loops and re-plays the scale until the user input returned from input_play_again() equals False."""
-    while True:
-        if input_play_again():
-            play_scale(scale, mode_number)
-        else:
-            print("\nAlright, let's do this again!")
-            break
