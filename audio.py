@@ -86,7 +86,7 @@ def play_scale(scale: List[str], mode_number: int):
     play_notes(notes)
 
 
-def input_play_another_scale() -> int:
+def input_play_another_scale() -> str:
     """Asks if the user wants to hear another scale (for the same root note)."""
     return input(
         "Type a number between 1 and 7 to hear another scale or type 0 to start over with another root note. "
